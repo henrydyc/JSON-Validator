@@ -56,6 +56,7 @@ public class ValidationIO {
 	public void addValidationCollectionResultToLog (ValidationCollection coll) {
 		
 			log += titleLine(coll.getName()) + nl + nl;
+			log += "Validator used : " + coll.getValidatorType() + nl + nl;
 			//Only prints incorrect entries
 			for (ValidationTask task : coll.getTasks()) {
 				if (task.successful()) continue; //Ignores successful validations
@@ -141,7 +142,7 @@ public class ValidationIO {
 	
 	/************ Static Utility Methods **************/
 	
-	public static String getJSONFilename (String json, String identifier) {
+	public static String getBaseFilename (String json, String identifier) {
 		return replaceBackslashAndSpacesWithDash(getIdentifierFromJSON(json, identifier));
 	}
 	

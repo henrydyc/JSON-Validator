@@ -12,7 +12,7 @@ import org.json.simple.parser.ParseException;
 
 /* The configuration JSON file should have the following schema:
  * {
- *		"tasks" : [ {"name" : "taskX", "truthFolder" : "taskX/truthJSON", "responseFolder" : "taskX/responseJSON"},  
+ *		"tasks" : [ {"name" : "taskX", "validator": "MyCustomValidator", "truthFolder" : "taskX/truthJSON", "responseFolder" : "taskX/responseJSON"},  
  *					{"name" : "taskY", "truthFolder" : "taskY/truthJSON", "responseFolder" : "taskY/responseJSON"} ,
  *					...... 
  * 				],
@@ -33,6 +33,12 @@ public class ValidationConfiguration {
 	public ValidationConfiguration(String configFilePath) throws FileNotFoundException, IOException, ParseException {
 	
 			JSONObject jsonObj = (JSONObject) new JSONParser().parse(new FileReader(configFilePath));
+			//Optional keys
+			if (jsonObj.containsKey("logPath"))
+				logPath = (String) jsonObj.get("logPath");
+			
+			
+			
 			
 			//Mandatory keys in the config JSON array and working diretory
 
@@ -42,19 +48,22 @@ public class ValidationConfiguration {
 			
 			JSONArray tasks = (JSONArray) (jsonObj.get("tasks"));
 			for(int i=0; i< tasks.size(); i++) {
+				String validatorType = "default";
+				
 				JSONObject task = (JSONObject) tasks.get(i);
 				
 				String name = (String) task.get("name");
 				String truthFolder = (String) task.get("truthFolder");
 				String responseFolder = (String) task.get("responseFolder");
+				if (task.containsKey("validator")){
+					validatorType = (String) task.get("validator");
+				}
 				
 				
-				colls.add( new ValidationCollection (name, truthFolder, responseFolder) );
+				colls.add( new ValidationCollection (name, truthFolder, responseFolder, validatorType) );
 			}			
 			
-			//Optional keys
-			if (jsonObj.containsKey("logPath"))
-				logPath = (String) jsonObj.get("logPath");
+			
 			
 	}
 

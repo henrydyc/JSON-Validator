@@ -11,14 +11,16 @@ import java.util.ArrayList;
  */
 public class ValidationCollection {
 	private String name; //name of the collection of JSONs
+	private String validatorType = "default";
 	private String truthDirPath;
 	private String responseDirPath;
 	private ArrayList<ValidationTask> tasks;
 	
-	public ValidationCollection (String name, String truthDirPath, String responseDirPath) throws FileNotFoundException {
+	public ValidationCollection (String name, String truthDirPath, String responseDirPath, String validatorType) throws FileNotFoundException {
 		this.name = name;
 		this.truthDirPath = truthDirPath;
 		this.responseDirPath = responseDirPath;
+		this.validatorType = validatorType;
 		
 		File f1 = new File(truthDirPath);
 		if (!(f1.exists() && f1.isDirectory())) throw new FileNotFoundException(truthDirPath);
@@ -35,9 +37,8 @@ public class ValidationCollection {
 			String truthFilePath = truthDirPath + fname;
 			String responseFilePath = responseDirPath + fname;
 			
-			ValidationTask task = new ValidationTask(truthFilePath, responseFilePath);
+			ValidationTask task = new ValidationTask(truthFilePath, responseFilePath, validatorType);
 			task.validate();
-			
 			tasks.add(task);
 			
 			System.out.println(fname + " processed.");
@@ -47,6 +48,10 @@ public class ValidationCollection {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public String getValidatorType() {
+		return validatorType;
 	}
 	
 	public ArrayList<ValidationTask> getTasks () {
