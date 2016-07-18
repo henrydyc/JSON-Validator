@@ -26,8 +26,8 @@ public class ValidationIO {
 
 	final static String DEFAULT_CONFIGFILE_PATH = "config.json";
 
-	private String workingDir = "";
-	private String logPath = "Result.log"; 
+	private String workingDir;
+	private String logPath; 
 
 	ArrayList<ValidationCollection> colls;
 	
@@ -37,12 +37,11 @@ public class ValidationIO {
 	private String log = ""; //A log message that will be written to the log file in disk
 	
 	public ValidationIO () {
-		logPath = getOutputFilePathByDate();
 		buildDataFromConfigurationFile(DEFAULT_CONFIGFILE_PATH);
+		
 	}
 		
 	public ValidationIO (String configFilePath) {
-		logPath = getOutputFilePathByDate();
 		buildDataFromConfigurationFile(configFilePath);
 	}
 
@@ -115,13 +114,22 @@ public class ValidationIO {
 		} 		
 		
 		colls = config.getValidationCollections();
+				
+		workingDir = config.getWorkingDir();
+		
+		if (config.hasLogPath()){
+			logPath = config.getLogPath();
+		} else {
+			logPath = getOutputFilePathByDate();
+		}
+		
 	}
 	
 	
 	private String getOutputFilePathByDate() {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
-		return workingDir + "Validation_Result_"+ sdf.format(date) + ".log";
+		return workingDir + "Result_"+ sdf.format(date) + ".log";
 	}
 	
 	private String titleLine(String title) {

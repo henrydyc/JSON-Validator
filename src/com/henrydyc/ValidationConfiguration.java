@@ -20,7 +20,7 @@ import org.json.simple.parser.ParseException;
  *		"logPath" : "myWorkingDir/Result.log"
  * }
  * 
- * where the "tasks" array is mandatory
+ * where the "tasks" array and "workingDir" is mandatory
  * 
  */
 
@@ -33,8 +33,13 @@ public class ValidationConfiguration {
 	public ValidationConfiguration(String configFilePath) throws FileNotFoundException, IOException, ParseException {
 	
 			JSONObject jsonObj = (JSONObject) new JSONParser().parse(new FileReader(configFilePath));
+			
+			//Mandatory keys in the config JSON array and working diretory
+
+			workingDir = (String) jsonObj.get("workingDir"); 
+
 			colls = new ArrayList<ValidationCollection> ();
-			//Mandatory keys in the config JSON
+			
 			JSONArray tasks = (JSONArray) (jsonObj.get("tasks"));
 			for(int i=0; i< tasks.size(); i++) {
 				JSONObject task = (JSONObject) tasks.get(i);
@@ -50,8 +55,7 @@ public class ValidationConfiguration {
 			//Optional keys
 			if (jsonObj.containsKey("logPath"))
 				logPath = (String) jsonObj.get("logPath");
-			if (jsonObj.containsKey("workingDir"))
-				workingDir = (String) jsonObj.get("workdingDir"); 
+			
 	}
 
 	public ArrayList<ValidationCollection> getValidationCollections() {
@@ -62,8 +66,12 @@ public class ValidationConfiguration {
 		return logPath != null;
 	}
 	
-	public boolean hasWorkdingDir() {
-		return workingDir != null;
+	
+	public String getLogPath() {
+		return logPath;
 	}
 	
+	public String getWorkingDir() {
+		return workingDir;
+	}
 }
