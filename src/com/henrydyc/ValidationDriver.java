@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ValidationDriver {
 	
 	//TODO add command line configuration options
-	final static String DEFAULT_CONFIGFILE_PATH = "config.json";
+	static String CONFIGFILE_PATH = "config.json";
 
 	ArrayList<ValidationCollection> colls;
 	ValidationIO io;
@@ -35,8 +35,11 @@ public class ValidationDriver {
 	public static void main(String [] args) {
 
 		try {		
-			//The io object creates a collection of validation tasks according to the config.json file 
-			ValidationIO io = new ValidationIO(DEFAULT_CONFIGFILE_PATH);
+			//The io object creates a collection of validation tasks according to the config.json file
+			if (args.length > 0) {
+				CONFIGFILE_PATH = args[0];
+			}
+			ValidationIO io = new ValidationIO(CONFIGFILE_PATH);
 			ValidationDriver driver = new ValidationDriver(io);
 			driver.validateAllTasks();
 			driver.outputResults();

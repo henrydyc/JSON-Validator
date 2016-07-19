@@ -24,22 +24,15 @@ public class ValidationIO {
 	//For cross-platform
 	private String nl = System.getProperty("line.separator");
 
-	final static String DEFAULT_CONFIGFILE_PATH = "config.json";
 
 	private String workingDir;
 	private String logPath; 
 
-	ArrayList<ValidationCollection> colls;
-	
-	
+	ArrayList<ValidationCollection> colls;	
 		
 	ValidationConfiguration config; 
 	private String log = ""; //A log message that will be written to the log file in disk
 	
-	public ValidationIO () {
-		buildDataFromConfigurationFile(DEFAULT_CONFIGFILE_PATH);
-		
-	}
 		
 	public ValidationIO (String configFilePath) {
 		buildDataFromConfigurationFile(configFilePath);
@@ -107,11 +100,11 @@ public class ValidationIO {
 		try {
 			config = new ValidationConfiguration(configFilePath);
 		} catch (FileNotFoundException e) {
-			raiseSystemError(new SystemError("Config File at Path: " + configFilePath + " is not found"));
 			e.printStackTrace();
+			raiseSystemError(new SystemError("File at Path: " + e.getMessage() + " is not found"));
 		} catch (IOException | ParseException e) {
-			raiseSystemError (new SystemError("An exception has occurred when parsing the config file: " + e.getMessage()) );
 			e.printStackTrace();
+			raiseSystemError (new SystemError("An exception has occurred when parsing the config file: " + e.getMessage()) );
 		} 		
 		
 		colls = config.getValidationCollections();

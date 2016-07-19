@@ -1,5 +1,6 @@
 package com.henrydyc;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,16 +31,15 @@ public class ValidationConfiguration {
 	ArrayList<ValidationCollection> colls;
 	String logPath = null;
 	
-	public ValidationConfiguration(String configFilePath) throws FileNotFoundException, IOException, ParseException {
+	public ValidationConfiguration(String configFilePath) throws ParseException, FileNotFoundException, IOException {
+		
+		    if (!new File(configFilePath).exists()) throw new FileNotFoundException(configFilePath); 
 	
 			JSONObject jsonObj = (JSONObject) new JSONParser().parse(new FileReader(configFilePath));
 			//Optional keys
 			if (jsonObj.containsKey("logPath"))
 				logPath = (String) jsonObj.get("logPath");
-			
-			
-			
-			
+
 			//Mandatory keys in the config JSON array and working diretory
 
 			workingDir = (String) jsonObj.get("workingDir"); 

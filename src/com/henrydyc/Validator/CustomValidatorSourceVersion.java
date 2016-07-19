@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+/*This class deals with JSON with the following format: {
  * "name" : val, 
  * "sources" : [
  * 		{"name": x, "version": "1"} ,
@@ -15,7 +16,7 @@ import org.json.simple.JSONObject;
  * }
  * The task is to validate if "name"/"version" pair has correct values
  */
-public class CustomValidatorAnnotationVersion extends CustomValidator {
+public class CustomValidatorSourceVersion extends CustomValidator {
 	
 
 	@Override
@@ -34,7 +35,6 @@ public class CustomValidatorAnnotationVersion extends CustomValidator {
 	protected HashMap<String, String> constructOneOneMappings(JSONObject json) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		
-
 		JSONArray arr = (JSONArray) json.get("sources");
 		for (int i=0; i < arr.size(); i++) {
 			JSONObject annotations = (JSONObject) arr.get(i);
@@ -49,6 +49,5 @@ public class CustomValidatorAnnotationVersion extends CustomValidator {
 		// TODO Auto-generated method stub
 		return new HashMap<String, ArrayList<String>>();
 	}
-
 
 }
