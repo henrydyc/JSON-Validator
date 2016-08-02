@@ -102,10 +102,13 @@ public class ValidationIO {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			raiseSystemError(new SystemError("File at Path: " + e.getMessage() + " is not found"));
-		} catch (IOException | ParseException e) {
+		} catch (IOException e)  {
 			e.printStackTrace();
 			raiseSystemError (new SystemError("An exception has occurred when parsing the config file: " + e.getMessage()) );
-		} 		
+		} catch (ParseException e) {
+			e.printStackTrace();
+			raiseSystemError (new SystemError("An exception has occurred when parsing the config file: " + e.getMessage()) );
+		}	
 		
 		colls = config.getValidationCollections();
 				
@@ -130,8 +133,7 @@ public class ValidationIO {
 		return "===================== " + title + " =====================";
 	}
 	
-	
-	
+
 	
 	/************ Static Utility Methods **************/
 	

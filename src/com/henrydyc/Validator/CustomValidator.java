@@ -14,9 +14,12 @@ import com.henrydyc.ValidationError.*;
  * An Custom Valdator class that allows user-defined validation behavior. This class:
  * <pre>
  * 1. Provides an interface for subclasses to define key : value validation rules by 
- *    implementing the constructOneOneMappings() and constructOneManyMappings() methods
- * 2. Once the key value mapping in (1) is defined in the subclass, it provides a 
- *    common validation implementation, validate(), for code reuse 
+ *    implementing the constructTruthMappings() and constructResponseMappings() methods
+ *    to specify the one-to-one (OO) and one-to-many (OM) validation rules between the JSONs
+ * 2. Once the key-value mapping is defined as in (1) by the subclass, this class provides 
+ *    a common validation implementation, validate(), that validates the OO and OM mappings
+ * 3. For example, truthOO should have the key: value pairs that we construct from the truth 
+ *    JSON object, and we wish to compare (validate) with the responseOO's key: value pairs. 
  * </pre>
 
  * @author Yichao Dong
@@ -24,11 +27,11 @@ import com.henrydyc.ValidationError.*;
  */
 public abstract class CustomValidator implements Validator {
 	
-	//For truth data:
-	protected HashMap<String, String> truthOO = null;  //One-to-one key : val mapping
-	protected HashMap<String, ArrayList<String>> truthOM = null; //One-to-many key : vals mapping
+	//For truth data, these should be constructed by constructTruthMappings():
+	protected HashMap<String, String> truthOO = null; 
+	protected HashMap<String, ArrayList<String>> truthOM = null;
 	
-	//For response data:
+	//For response data, these should be constructed by constructResponseMappings()
 	protected HashMap<String, String> responseOO = null;
 	protected HashMap<String, ArrayList<String>> responseOM = null;
 	
@@ -36,10 +39,6 @@ public abstract class CustomValidator implements Validator {
 	/************** Interface Methods ******************/
 	protected abstract void constructTruthMappings (JSONObject truthJSON);
 	protected abstract void constructResponseMappings (JSONObject responseJSON);
-	
-	//Implementation must return "newed" (non-null) objects, otherwise will raise an error in validate() below
-	protected abstract HashMap<String,String> constructOneOneMappings (JSONObject json);
-	protected abstract HashMap<String, ArrayList<String>> constructOneManyMappings (JSONObject json);
 		
 	
 	/************** Inheritable Methods ***************/	
@@ -49,8 +48,8 @@ public abstract class CustomValidator implements Validator {
 	 */
 	@Override
 	public void validate(ValidationTaskResult result, JSONObject truthJSON, JSONObject responseJSON){
-		constructTruthMappings (truthJSON);
-		constructResponseMappings (responseJSON);
+		constructTruthMappings (truthJSON); //constructs truthOO and truthOM
+		constructResponseMappings (responseJSON); //constructs responseOO and responseOM
 		
 		//Checks One to one key-value mapping
 		for (HashMap.Entry<String, String> entry : truthOO.entrySet()) {
@@ -87,6 +86,5 @@ public abstract class CustomValidator implements Validator {
 		    }   
 		}		
 	}
-	
 	
 }

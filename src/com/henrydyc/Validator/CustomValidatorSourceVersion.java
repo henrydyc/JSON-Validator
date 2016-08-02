@@ -6,8 +6,10 @@ import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-/*This class deals with JSON with the following format: {
- * "name" : val, 
+/*This class is a CustumValidor class that allows user to customize the 
+ * key-value pairs to be compared against.
+ * Specifically, this class deals with JSON with the following format: {
+ * "name" : "val", 
  * "sources" : [
  * 		{"name": x, "version": "1"} ,
  * 		{"name": y, "version": "2"}
@@ -31,8 +33,7 @@ public class CustomValidatorSourceVersion extends CustomValidator {
 		responseOM = constructOneManyMappings(responseJSON);		
 	}
 
-	@Override
-	protected HashMap<String, String> constructOneOneMappings(JSONObject json) {
+	private HashMap<String, String> constructOneOneMappings(JSONObject json) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		JSONArray arr = (JSONArray) json.get("sources");
@@ -44,9 +45,7 @@ public class CustomValidatorSourceVersion extends CustomValidator {
 		return map;
 	}
 
-	@Override
-	protected HashMap<String, ArrayList<String>> constructOneManyMappings(JSONObject json) {
-		// TODO Auto-generated method stub
+	private HashMap<String, ArrayList<String>> constructOneManyMappings(JSONObject json) {
 		return new HashMap<String, ArrayList<String>>();
 	}
 
