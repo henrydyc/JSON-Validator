@@ -2,6 +2,7 @@ package com.henrydyc.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
@@ -52,7 +53,7 @@ public abstract class CustomValidator implements Validator {
 		constructResponseMappings (responseJSON); //constructs responseOO and responseOM
 		
 		//Checks One to one key-value mapping
-		for (HashMap.Entry<String, String> entry : truthOO.entrySet()) {
+		for (Map.Entry<String, String> entry : truthOO.entrySet()) {
 		    String key = entry.getKey();
 		    String tValue = entry.getValue();
 		    if(!responseOO.containsKey(key)){
@@ -65,7 +66,7 @@ public abstract class CustomValidator implements Validator {
 		    }
 		}
 		
-		for (HashMap.Entry<String, ArrayList<String>> entry : truthOM.entrySet()) {
+		for (Map.Entry<String, ArrayList<String>> entry : truthOM.entrySet()) {
 		    String key = entry.getKey();
 		    ArrayList<String> tValueArr = entry.getValue();
 		    if(!responseOO.containsKey(key)){
