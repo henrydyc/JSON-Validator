@@ -24,8 +24,6 @@ public class ValidationIO {
 	//For cross-platform
 	private String nl = System.getProperty("line.separator");
 
-
-	private String workingDir;
 	private String logPath; 
 
 	ArrayList<ValidationCollection> colls;	
@@ -111,9 +109,7 @@ public class ValidationIO {
 		}	
 		
 		colls = config.getValidationCollections();
-				
-		workingDir = config.getWorkingDir();
-		
+						
 		if (config.hasLogPath()){
 			logPath = config.getLogPath();
 		} else {
@@ -126,7 +122,7 @@ public class ValidationIO {
 	private String getOutputFilePathByDate() {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
-		return workingDir + "Result_"+ sdf.format(date) + ".log";
+		return "Result_"+ sdf.format(date) + ".log";
 	}
 	
 	private String titleLine(String title) {

@@ -17,17 +17,15 @@ import org.json.simple.parser.ParseException;
  *					{"name" : "taskY", "truthFolder" : "taskY/truthJSON", "responseFolder" : "taskY/responseJSON"} ,
  *					...... 
  * 				],
- * 		"workdingDir" : "myWorkingDir",
  *		"logPath" : "myWorkingDir/Result.log"
  * }
  * 
- * where the "tasks" array and "workingDir" is mandatory
- * 
+ * where the "tasks" array is mandatory
+ * if "logPath" not found, system outputs the log in the project root directory
  */
 
 public class ValidationConfiguration {
 	
-	String workingDir = null;
 	ArrayList<ValidationCollection> colls;
 	String logPath = null;
 	
@@ -39,10 +37,6 @@ public class ValidationConfiguration {
 			//Optional keys
 			if (jsonObj.containsKey("logPath"))
 				logPath = (String) jsonObj.get("logPath");
-
-			//Mandatory keys in the config JSON array and working diretory
-
-			workingDir = (String) jsonObj.get("workingDir"); 
 
 			colls = new ArrayList<ValidationCollection> ();
 			
@@ -80,7 +74,4 @@ public class ValidationConfiguration {
 		return logPath;
 	}
 	
-	public String getWorkingDir() {
-		return workingDir;
-	}
 }
