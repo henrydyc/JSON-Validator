@@ -49,5 +49,5 @@ Temporary Items
 # Java specific files
 *.class
 bin\\*
-config.json
 *.log
+*.txt

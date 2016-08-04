@@ -1,0 +1,7 @@
+{
+    "name": "car 1",
+    "make": "Honda",
+    "model": "Civic",
+    "price_in_usd": "17000"
+    "sold_in_states": ["NV", "CA", "AZ"]
+}

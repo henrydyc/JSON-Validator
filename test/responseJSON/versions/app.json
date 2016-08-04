@@ -1,0 +1,14 @@
+{
+    "name": "New App",
+    "sources" : [
+        {
+            "name": "Github",
+            "version" : "1.1"
+        },
+        {
+            "name": "BitBucket",
+            "version" : "1.1"
+        }
+    ]
+
+}

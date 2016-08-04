@@ -1,0 +1,16 @@
+{
+    "tasks": [
+        {
+            "name": "Cars",
+            "truthFolder": "./test/truthJSON/cars/",
+            "responseFolder": "./test/responseJSON/cars/"
+        },
+        {
+            "name": "Versions",
+            "validator": "SourceVersion",
+            "truthFolder": "./test/truthJSON/versions/",
+            "responseFolder": "./test/responseJSON/versions/"
+        }
+    ],
+    "logPath": "Mylog.txt"
+}
