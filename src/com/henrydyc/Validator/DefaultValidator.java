@@ -23,8 +23,12 @@ import com.henrydyc.ValidationError.KeyValueMismatchOOError;
 public class DefaultValidator implements Validator {
 	
 	@Override
-	public void validate(ValidationTaskResult result, JSONObject truthJSON, JSONObject responseJSON) {
+	public void validate(ValidationTaskResult result, Object truthJSONObj, Object responseJSONObj) {
 		assert (result != null);
+		
+		JSONObject truthJSON = (JSONObject) truthJSONObj;
+		JSONObject responseJSON = (JSONObject) responseJSONObj;
+		
 		
 		//attempt to set a more meaningful id
 		if (responseJSON.get("name") != null) { 

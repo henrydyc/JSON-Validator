@@ -22,15 +22,15 @@ public class CustomValidatorSourceVersion extends CustomValidator {
 	
 
 	@Override
-	protected void constructTruthMappings(JSONObject truthJSON) {
-		truthOO = constructOneOneMappings(truthJSON);
-		truthOM = constructOneManyMappings(truthJSON);
+	protected void constructTruthMappings(Object truthJSONObj) {
+		truthOO = constructOneOneMappings((JSONObject)truthJSONObj);
+		truthOM = constructOneManyMappings((JSONObject)truthJSONObj);
 	}
 
 	@Override
-	protected void constructResponseMappings(JSONObject responseJSON) {
-		responseOO = constructOneOneMappings(responseJSON);
-		responseOM = constructOneManyMappings(responseJSON);		
+	protected void constructResponseMappings(Object responseJSONObj) {
+		responseOO = constructOneOneMappings((JSONObject)responseJSONObj);
+		responseOM = constructOneManyMappings((JSONObject)responseJSONObj);		
 	}
 
 	private HashMap<String, String> constructOneOneMappings(JSONObject json) {

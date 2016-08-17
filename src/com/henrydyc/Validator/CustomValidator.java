@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.json.simple.JSONObject;
-
 import com.henrydyc.*;
 import com.henrydyc.ValidationError.*;
 
@@ -38,8 +36,8 @@ public abstract class CustomValidator implements Validator {
 	
 	
 	/************** Interface Methods ******************/
-	protected abstract void constructTruthMappings (JSONObject truthJSON);
-	protected abstract void constructResponseMappings (JSONObject responseJSON);
+	protected abstract void constructTruthMappings (Object truthJSONObj);
+	protected abstract void constructResponseMappings (Object responseJSONObj);
 		
 	
 	/************** Inheritable Methods ***************/	
@@ -48,9 +46,9 @@ public abstract class CustomValidator implements Validator {
 	 * Validates the One-to-one and One-to-many sets with the truth JSON against the response JSON
 	 */
 	@Override
-	public void validate(ValidationTaskResult result, JSONObject truthJSON, JSONObject responseJSON){
-		constructTruthMappings (truthJSON); //constructs truthOO and truthOM
-		constructResponseMappings (responseJSON); //constructs responseOO and responseOM
+	public void validate(ValidationTaskResult result, Object truthJSONObj, Object responseJSONObj){
+		constructTruthMappings (truthJSONObj); //constructs truthOO and truthOM
+		constructResponseMappings (responseJSONObj); //constructs responseOO and responseOM
 		
 		//Checks One to one key-value mapping
 		for (Map.Entry<String, String> entry : truthOO.entrySet()) {
