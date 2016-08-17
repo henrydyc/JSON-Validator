@@ -72,15 +72,35 @@ If not specified in the *config.json* file, the tasks will be using the default 
     "listKey" : ["val1", "val2", "val3"]
 }
 ```
-####<a name="customValidator"></a> Custom validator 
+
+#### <a name="customValidator"></a>Custom validator
 Users can implement their own validation rules, by implementing a custom validator class in the source code. This becomes necessary if the two JSONs being compared has a complicated structure (deeply nested), or only a subset of the key-value pairs needs to be validated.
 To implement your own validator object, please do the following:
 
- 1. Under *src/com/henrydyc/Validator/,* create a class, e.g. `MyCustomValidator` that extends the `CustomValidator` class in the same folder
- 2. In the `MyCustomValidator` class, override the two required methods: `constructTruthMappings()` and `constructResponseMappings()`which should process the JSON file and extract your key-value pairs to a hash table data structure. An example class, `CustomValidatorSourceVersion`, is provided in the source code to show how this can be done.
- 3. In the `ValidatorFactory` class, give a name to your custom validator, and add this name to an `if` condition to make it return your custom class instance.
- 4. In the [validator field](#configJSON)  in *config.json*, use the custom validator name you created in (3) to make the program use this validator for the validation task.
+
+First create a new class, for example, `CustomValidatorMyTask`, under  *src/com/henrydyc/Validator/*, and make it a subclass of the `CustomValidator`:
+```java
+public class CustomValidatorMyTask extends CustomValidator {
+
+	//implement the required abstract methods here
+}
+```
+
+Then you need to add an `if` condition in the `ValidatorFactory` class to make it return an instance of your new `CustomValidatorMyTask` class :
+
+```java
+public class ValidatorFactory {
+	public static Validator getValidator (String type) {
+		if (type.equalsIgnoreCase ("MyTask")){
+			return new CustomValidatorNewTask();
+		} 
+		... // if conditions for other validators
+	}
+}
+```
+Finally, in the  *config.json* file, set the  "**validator**" : "**MyTask**" (see earlier description) to use this custom validator for your task.
+
+For more information, please refer to the `CustomValidatorSourceVersion` class included in this repository as an example to implement a custom validation class for a specific JSON structure.
  
 ## License
 This project is licensed under the MIT License
-
